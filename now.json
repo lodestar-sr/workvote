@@ -1,0 +1,76 @@
+{
+  "version": 2,
+  "name": "poll",
+  "alias": "poll-app.now.sh",
+  "builds": [
+    { "src": "api/poll.js", "use": "@now/node" },
+    { "src": "api/actions.js", "use": "@now/node" },
+    { "src": "api/oauth.js", "use": "@now/node" },
+    { "src": "api/subscriptions.js", "use": "@now/node" },
+    { "src": "api/user.js", "use": "@now/node" },
+    { "src": "api/logout.js", "use": "@now/node" },
+    { "src": "api/cancel_subscription.js", "use": "@now/node" },
+    { "src": "api/change_subscription.js", "use": "@now/node" },
+    { "src": "frontend/next.config.js", "use": "@now/next"},
+    { "src": "frontend/static/*", "use": "@now/static" }
+  ],
+  "env": {
+    "CLIENT_ID": "@slack-client-id",
+    "CLIENT_SECRET": "@slack-client-secret",
+    "FAUNA_SECRET": "@faunadb-secret",
+    "STRIPE_SECRET": "@live-stripe-key",
+    "SLACK_SIGNING_SECRET": "@slack-signing-secret"
+  },
+  "routes": [
+    {
+      "src": "^/poll",
+      "dest": "/api/poll.js"
+    },
+    {
+      "src": "^/oauth",
+      "dest": "/api/oauth.js"
+    },
+    {
+      "src": "^/actions",
+      "dest": "/api/actions.js"
+    },
+    {
+      "src": "^/subscriptions",
+      "dest": "/api/subscriptions.js"
+    },
+    {
+      "src": "^/cancel_subscription",
+      "dest": "/api/cancel_subscription.js"
+    },
+        {
+      "src": "^/change_subscription",
+      "dest": "/api/change_subscription.js"
+    },
+    {
+      "src": "^/user",
+      "dest": "/api/user.js"
+    },
+    {
+      "src": "^/logout",
+      "dest": "/api/logout.js"
+    },
+    {
+      "src": "^/",
+      "dest": "/frontend/"
+    },
+    {
+      "src": "^/privacy",
+      "dest": "/frontend/privacy"
+    },
+    {
+      "src": "^/static/(.*)",
+      "dest": "/frontend/static/$1",
+      "headers": {"cache-control": "s-maxage=31536000"}
+    },
+    {
+      "src": "^/_next/static/(.*)$",
+      "dest": "/frontend/_next/static/$1",
+      "headers": {"cache-control": "s-maxage=31536000"}
+    }
+  ]
+}
