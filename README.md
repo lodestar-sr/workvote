@@ -1,5 +1,5 @@
-# poll-app
-A [polling app](https://poll-app.now.sh) for slack
+# WorkVote
+A [workvote app](https://work.vote) for slack
 
 
 ## Todo
