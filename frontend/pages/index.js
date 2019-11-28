@@ -256,9 +256,6 @@ const Header = ({team}) => {
       <Flex direction="row" justify="left" className="login">
         <Text href={loginUrl} color="white" size={14}>Login</Text>
       </Flex>
-      {/* <Flex direction="row" alignSelf="left" className="login">
-        <Text href={loginUrl} color="white" size={14}>Login</Text>
-      </Flex> */}
     </Flex>
   )
 }
@@ -685,7 +682,7 @@ const useInfoModal = ({user}) => {
         <blockquote>
           /poll "Favorite food?" "Pizza" "Ice Cream" "Other"
         </blockquote>
-        <img style={{width: 700}} src="/static/slack.png"/>
+        <img style={{width: 700}} src="/static/img2.png"/>
         <p>To make an anonymous poll just add <code>anonymous</code> to the end of your poll. Then, names will not show up when people vote.</p>
         <blockquote>
           /poll "Who has the whitest sneakers" "Pam Beesly" "Dwight Schrute" "Michael Scott" anonymous
