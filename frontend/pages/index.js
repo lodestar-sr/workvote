@@ -212,10 +212,10 @@ const PriceCard = ({
   </Card>
 );
 
-const addToSlackUrl = "https://slack.com/oauth/authorize?client_id=35696317461.504169540400&scope=commands"
+const addToSlackUrl = "https://slack.com/oauth/authorize?client_id=770951425620.844250552417&scope=commands"
 
 const signUpWithSlack = (plan) => {
-  window.location = addToSlackUrl + "&redirect_uri=" + encodeURI("https://poll-app.now.sh/oauth?selected=" + plan)
+  window.location = addToSlackUrl + "&redirect_uri=" + encodeURI("http://localhost:3000/oauth?selected=" + plan)
 }
 
 const selectOrAdd = (loggedIn, setSelected) => plan => () => {
@@ -225,6 +225,57 @@ const selectOrAdd = (loggedIn, setSelected) => plan => () => {
     signUpWithSlack(plan)
   }
 }
+
+const Pricing = ({selected, setSelected, subscribed, loggedIn}) => {
+  const select = selectOrAdd(loggedIn, setSelected)
+  return (
+    <div className="pricing">
+      <SelectablePriceCard
+        selected={selected}
+        subscribed={subscribed}
+        name="poll-app-personal"
+        price={0}
+        features={["Non-Commercial Use", "25 polls a month"]}
+        accentColor="#59A5FF"
+        buttonText="Sign Up"
+        title="Personal"
+        onClick={select("poll-app-personal")}/>
+      <SelectablePriceCard
+        selected={selected}
+        subscribed={subscribed}
+        name="poll-app-basic"
+        price={15}
+        features={["50 polls a month", "Unlimited Users", "30 day free trial"]}
+        buttonFilled={true}
+        accentColor="#FF7A00"
+        subtitle="Most Popular"
+        buttonText="Try Now"
+        title="Basic"
+        onClick={select("poll-app-basic")}/>
+      <SelectablePriceCard
+        selected={selected}
+        subscribed={subscribed}
+        name="poll-app-premium"
+        price={25}
+        features={["100 polls a month", "Unlimited Users"]}
+        accentColor="#006CEA"
+        buttonVariant="contained"
+        buttonText="Sign Up"
+        title="Premium"
+        onClick={select("poll-app-premium")}/>
+      <SelectablePriceCard
+        selected={selected}
+        subscribed={subscribed}
+        name="poll-app-enterprise"
+        price={50}
+        features={["Unlimited polls a month", "Unlimited Users"]}
+        accentColor="#004AA0"
+        buttonText="Sign Up"
+        title="Enterprise"
+        onClick={select("poll-app-enterprise")}/>
+    </div>
+  )
+};
 
 const LoggedInActions = ({team}) =>
   <Flex style={{backgroundColor: "rgb(83, 166, 251)", marginBottom: 20}} direction="row" justify="flex-end">
@@ -238,7 +289,7 @@ const LoggedInActions = ({team}) =>
   </Flex>
 
 
-const loginUrl = "https://slack.com/oauth/authorize?scope=identity.basic,identity.team&client_id=35696317461.504169540400"
+const loginUrl = "https://slack.com/oauth/authorize?scope=identity.basic,identity.team&client_id=770951425620.844250552417"
 
 const Header = ({team}) => {
 
@@ -431,9 +482,6 @@ const CheckoutForm = injectStripe(({price, planName, stripe, plan, setSubscribed
   )
 })
 
-// const DemoImage = () =>
-//   <img style={{width: 253, height: 500, padding: "0 10px"}} src="/static/pixel-white.png" />
-
 const Stripe = ({price, planName, plan, setSubscribed, setHasCard, onSuccess}) => {
   if (!process.browser) {
     return null;
@@ -566,48 +614,42 @@ const ActiveSubscription = ({subscribed, selected, subscription, setSubscribed})
   )
 }
 
-// const SecondaryPanel = ({ selected, subscribed, subscription, setSubscribed, hasCard, setHasCard, onSuccess }) => {
+const SecondaryPanel = ({ selected, subscribed, subscription, setSubscribed, hasCard, setHasCard, onSuccess }) => {
 
-//   const currentShown = selected || subscribed;
-//   const planName = nameByPlan[currentShown];
-//   const price = priceBySelected[currentShown]
+  const currentShown = selected || subscribed;
+  const planName = nameByPlan[currentShown];
+  const price = priceBySelected[currentShown]
 
-//   if (!subscribed && !selected) {
-//     return <DemoImage />
-//   } else if (hasCard || selected === "poll-app-personal" || (subscribed === "poll-app-personal" && !selected)) {
-//     return (
-//       <ActiveSubscription
-//         hasCard={hasCard}
-//         subscription={subscription}
-//         subscribed={subscribed}
-//         selected={selected}
-//         setSubscribed={setSubscribed} />
-//     )
-//   } else {
-//     return (
-//       <Stripe
-//         onSuccess={onSuccess}
-//         hasCard={hasCard}
-//         setHasCard={setHasCard}
-//         setSubscribed={setSubscribed}
-//         planName={planName}
-//         price={price}
-//         plan={currentShown} />
-//     )
-//   }
-// }
+  if (!subscribed && !selected) {
+    return '';
+  } else if (hasCard || selected === "poll-app-personal" || (subscribed === "poll-app-personal" && !selected)) {
+    return (
+      <ActiveSubscription
+        hasCard={hasCard}
+        subscription={subscription}
+        subscribed={subscribed}
+        selected={selected}
+        setSubscribed={setSubscribed} />
+    )
+  } else {
+    return (
+      <Stripe
+        onSuccess={onSuccess}
+        hasCard={hasCard}
+        setHasCard={setHasCard}
+        setSubscribed={setSubscribed}
+        planName={planName}
+        price={price}
+        plan={currentShown} />
+    )
+  }
+}
 
 const titleCase = (str) => str && str[0].toUpperCase() + str.substring(1);
 
 const AddToSlack = () =>
-  <a href="https://slack.com/oauth/authorize?client_id=35696317461.504169540400&scope=commands">
-    <img
-      alt="Add to Slack"
-      src="https://platform.slack-edge.com/img/add_to_slack.png"
-      srcSet="https://platform.slack-edge.com/img/add_to_slack.png 1x, https://platform.slack-edge.com/img/add_to_slack@2x.png 2x"
-      width={139}
-      height={40}
-    />
+  <a href="https://slack.com/oauth/authorize?client_id=770951425620.844250552417&scope=commands" className="add">
+    Add to Slack <img style={{width: 18, height: 18}} src="/static/add.png" className="image"/>
   </a>
 
 
@@ -683,11 +725,6 @@ const useInfoModal = ({user}) => {
           /poll "Favorite food?" "Pizza" "Ice Cream" "Other"
         </blockquote>
         <img style={{width: 700}} src="/static/img2.png"/>
-        <p>To make an anonymous poll just add <code>anonymous</code> to the end of your poll. Then, names will not show up when people vote.</p>
-        <blockquote>
-          /poll "Who has the whitest sneakers" "Pam Beesly" "Dwight Schrute" "Michael Scott" anonymous
-        </blockquote>
-        <img style={{width: 700}} src="/static/poll-example2.png"/>
       </div>
     </ReactModal>
   ));
@@ -698,57 +735,6 @@ const defaultPrevented = (f) => (e) => {
   e.preventDefault();
   f();
 }
-
-const Pricing = ({selected, setSelected, subscribed, loggedIn}) => {
-  const select = selectOrAdd(loggedIn, setSelected)
-  return (
-    <div className="pricing">
-      <SelectablePriceCard
-        selected={selected}
-        subscribed={subscribed}
-        name="poll-app-personal"
-        price={0}
-        features={["Non-Commercial Use", "25 polls a month"]}
-        accentColor="#59A5FF"
-        buttonText="Sign Up"
-        title="Personal"
-        onClick={select("poll-app-personal")}/>
-      <SelectablePriceCard
-        selected={selected}
-        subscribed={subscribed}
-        name="poll-app-basic"
-        price={15}
-        features={["50 polls a month", "Unlimited Users", "30 day free trial"]}
-        buttonFilled={true}
-        accentColor="#FF7A00"
-        subtitle="Most Popular"
-        buttonText="Try Now"
-        title="Basic"
-        onClick={select("poll-app-basic")}/>
-      <SelectablePriceCard
-        selected={selected}
-        subscribed={subscribed}
-        name="poll-app-premium"
-        price={25}
-        features={["100 polls a month", "Unlimited Users"]}
-        accentColor="#006CEA"
-        buttonVariant="contained"
-        buttonText="Sign Up"
-        title="Premium"
-        onClick={select("poll-app-premium")}/>
-      <SelectablePriceCard
-        selected={selected}
-        subscribed={subscribed}
-        name="poll-app-enterprise"
-        price={50}
-        features={["Unlimited polls a month", "Unlimited Users"]}
-        accentColor="#004AA0"
-        buttonText="Sign Up"
-        title="Enterprise"
-        onClick={select("poll-app-enterprise")}/>
-    </div>
-  )
-};
 
 const App = ({user, initialSelection}) => {
 
@@ -769,7 +755,7 @@ const App = ({user, initialSelection}) => {
     <>
       <Head>
         <title>WorkVote - Slack polls made easy</title>
-        <link rel="icon" type="image/png" href="/static/logo.png" sizes="196x196"/>
+        <link rel="icon" type="image/png" href="/static/favicon.png" sizes="196x196"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <script src="https://js.stripe.com/v3/"></script>
       </Head>
@@ -789,11 +775,19 @@ const App = ({user, initialSelection}) => {
             </Flex>
             <Flex className="next-to" direction="row" justify="center">
               <text className="slack">
-                <a href="#" onClick={defaultPrevented(showInfoModal)} className="add">Add to Slack
-                  <img style={{width: 18, height: 18}} src="/static/add.png" className="image"/></a>
+                <AddToSlack/>
               </text>
             </Flex>
             <div className="screenshot"></div>
+
+            <SecondaryPanel
+              onSuccess={showCongratsModal}
+              setHasCard={setHasCard}
+              hasCard={hasCard}
+              setSubscribed={setSubscribed}
+              subscription={user.subscription}
+              selected={selected}
+              subscribed={subscribed}/>
 
             <h3 className="how-title">How it works</h3>
             <div className="how-it-works">

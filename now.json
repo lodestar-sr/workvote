@@ -1,7 +1,7 @@
 {
   "version": 2,
-  "name": "poll",
-  "alias": "poll-app.now.sh",
+  "name": "workvote",
+  "alias": "work.vote",
   "builds": [
     { "src": "api/poll.js", "use": "@now/node" },
     { "src": "api/actions.js", "use": "@now/node" },
@@ -15,11 +15,11 @@
     { "src": "frontend/static/*", "use": "@now/static" }
   ],
   "env": {
-    "CLIENT_ID": "@slack-client-id",
-    "CLIENT_SECRET": "@slack-client-secret",
-    "FAUNA_SECRET": "@faunadb-secret",
+    "CLIENT_ID": "770951425620.844250552417",
+    "CLIENT_SECRET": "e73e71d008001b72560fdf359d923cb1",
+    "FAUNA_SECRET": "fnADeTThuvACANB4c1LUeT4Jog-KKcorwBBPwb1e",
     "STRIPE_SECRET": "@live-stripe-key",
-    "SLACK_SIGNING_SECRET": "@slack-signing-secret"
+    "SLACK_SIGNING_SECRET": "a8a6fdd4d2d48c0d5da3f22bdba62991"
   },
   "routes": [
     {
