@@ -151,8 +151,8 @@ const buildPollMessage = ({ question, options, callback_id, anonymous }) => {
 const footer = {
   text: "", // without this slack with remove the footer on update
   color: "#53a6fb",
-  footer: `<https://workvote.now.sh|WorkVote App Settings>`,
-  footer_icon: "https://workvote.now.sh/static/logo.png",
+  footer: `<https://work.vote|WorkVote App Settings>`,
+  footer_icon: "https://work.vote/static/logo.png",
 }
 
 const addFooterToMessage = (message) => {
