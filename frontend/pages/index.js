@@ -215,7 +215,7 @@ const PriceCard = ({
 const addToSlackUrl = "https://slack.com/oauth/authorize?client_id=770951425620.844250552417&scope=commands"
 
 const signUpWithSlack = (plan) => {
-  window.location = addToSlackUrl + "&redirect_uri=" + encodeURI("http://localhost:3000/oauth?selected=" + plan)
+  window.location = addToSlackUrl + "&redirect_uri=" + encodeURI("https://work.vote/oauth?selected=" + plan)
 }
 
 const selectOrAdd = (loggedIn, setSelected) => plan => () => {
