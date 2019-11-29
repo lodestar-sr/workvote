@@ -51,8 +51,8 @@ module.exports = async (req, res) => {
       ...clientInfo,
       code,
       redirect_uri: selected
-        ? `https://work.vote.now.sh/oauth?selected=${selected}`
-        : "https://work.vote.now.sh/oauth"
+        ? `https://workvote.now.sh/oauth?selected=${selected}`
+        : "https://workvote.now.sh/oauth"
     };
 
 
