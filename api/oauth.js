@@ -75,7 +75,7 @@ module.exports = async (req, res) => {
     console.log(team_id, user_id)
     const teamInfo = await upsertUserAndTeamInfo({ team_id, user_id, slack_access_token, access_token })
 
-    if (selected === "workvote-personal") {
+    if (selected === "plan_GGmN0AnHwzEM0x") {
       console.log("Personal, so subscribing now")
       const customer = await stripe.customers.retrieve(teamInfo.data.stripe_id)
 
