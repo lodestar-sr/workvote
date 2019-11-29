@@ -1,5 +1,5 @@
 # WorkVote
-A [workvote app](https://workvote.now.sh) for slack
+A [workvote app](https://work.vote) for slack
 
 
 ## Todo

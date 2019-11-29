@@ -1,7 +1,7 @@
 {
   "version": 2,
   "name": "workvote",
-  "alias": "workvote.now.sh",
+  "alias": "work.vote",
   "builds": [
     { "src": "api/poll.js", "use": "@now/node" },
     { "src": "api/actions.js", "use": "@now/node" },
@@ -17,8 +17,8 @@
   "env": {
     "CLIENT_ID": "770951425620.844250552417",
     "CLIENT_SECRET": "e73e71d008001b72560fdf359d923cb1",
-    "FAUNA_SECRET": "fnADeXRI2lACCRIwAf4DaMsACnMysenW1kgMJiSW",
-    "STRIPE_SECRET": "fnADeXI3PQACAGN9dLof2uM0FimYOHdNvTH34WiN",
+    "FAUNA_SECRET": "fnADeY8VvVACErOjdRpBpqSnN2r85L3EnZlhahpt",
+    "STRIPE_SECRET": "sk_test_ALaYxQpVEPA62pn3VfMVLjXi001hu1opKC",
     "SLACK_SIGNING_SECRET": "a8a6fdd4d2d48c0d5da3f22bdba62991"
   },
   "routes": [
