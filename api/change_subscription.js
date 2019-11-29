@@ -27,7 +27,7 @@ module.exports = async (req, res) => {
 
     const customer = await stripe.customers.retrieve(stripe_id)
 
-    if (plan !== "plan_GGmN0AnHwzEM0x" && customer.sources.total_count === 0) {
+    if (plan !== "workvote-personal" && customer.sources.total_count === 0) {
       send(res, 400, {error: "Need stripe payment information"})
       return;
     }
