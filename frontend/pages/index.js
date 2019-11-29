@@ -233,17 +233,17 @@ const Pricing = ({selected, setSelected, subscribed, loggedIn}) => {
       <SelectablePriceCard
         selected={selected}
         subscribed={subscribed}
-        name="poll-app-personal"
+        name="workvote-personal"
         price={0}
         features={["Non-Commercial Use", "25 polls a month"]}
         accentColor="#59A5FF"
         buttonText="Sign Up"
         title="Personal"
-        onClick={select("poll-app-personal")}/>
+        onClick={select("workvote-personal")}/>
       <SelectablePriceCard
         selected={selected}
         subscribed={subscribed}
-        name="poll-app-basic"
+        name="workvote-basic"
         price={15}
         features={["50 polls a month", "Unlimited Users", "30 day free trial"]}
         buttonFilled={true}
@@ -251,28 +251,28 @@ const Pricing = ({selected, setSelected, subscribed, loggedIn}) => {
         subtitle="Most Popular"
         buttonText="Try Now"
         title="Basic"
-        onClick={select("poll-app-basic")}/>
+        onClick={select("workvote-basic")}/>
       <SelectablePriceCard
         selected={selected}
         subscribed={subscribed}
-        name="poll-app-premium"
+        name="workvote-premium"
         price={25}
         features={["100 polls a month", "Unlimited Users"]}
         accentColor="#006CEA"
         buttonVariant="contained"
         buttonText="Sign Up"
         title="Premium"
-        onClick={select("poll-app-premium")}/>
+        onClick={select("workvote-premium")}/>
       <SelectablePriceCard
         selected={selected}
         subscribed={subscribed}
-        name="poll-app-enterprise"
+        name="workvote-enterprise"
         price={50}
         features={["Unlimited polls a month", "Unlimited Users"]}
         accentColor="#004AA0"
         buttonText="Sign Up"
         title="Enterprise"
-        onClick={select("poll-app-enterprise")}/>
+        onClick={select("workvote-enterprise")}/>
     </div>
   )
 };
@@ -520,17 +520,17 @@ const useDevTools = () => {
 }
 
 const priceBySelected = {
-  "poll-app-personal": 0,
-  "poll-app-basic": 15,
-  "poll-app-premium": 25,
-  "poll-app-enterprise": 50,
+  "workvote-personal": 0,
+  "workvote-basic": 15,
+  "workvote-premium": 25,
+  "workvote-enterprise": 50,
 }
 
 const nameByPlan = {
-  "poll-app-personal": "Personal",
-  "poll-app-basic": "Basic",
-  "poll-app-premium": "Premium",
-  "poll-app-enterprise": "Enterprise",
+  "workvote-personal": "Personal",
+  "workvote-basic": "Basic",
+  "workvote-premium": "Premium",
+  "workvote-enterprise": "Enterprise",
 }
 
 const SubscriptionButton = ({subscribed, selected, setSubscribed}) => {
@@ -622,7 +622,7 @@ const SecondaryPanel = ({ selected, subscribed, subscription, setSubscribed, has
 
   if (!subscribed && !selected) {
     return '';
-  } else if (hasCard || selected === "poll-app-personal" || (subscribed === "poll-app-personal" && !selected)) {
+  } else if (hasCard || selected === "workvote-personal" || (subscribed === "workvote-personal" && !selected)) {
     return (
       <ActiveSubscription
         hasCard={hasCard}
@@ -742,7 +742,7 @@ const App = ({user, initialSelection}) => {
   const [showInfoModal, _hideInfoModal] = useInfoModal({user});
 
   useEffect(() => {
-    if (initialSelection === "poll-app-personal") {
+    if (initialSelection === "workvote-personal") {
       showCongratsModal();
     }
   }, [])

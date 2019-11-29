@@ -1,4 +1,4 @@
-Your privacy is critically important to us at poll-app.
+Your privacy is critically important to us at workvote.
 
 *   We are thoughtful about the personal information we ask you to provide and the personal information that we collect about you through the operation of our services.
 *   We store personal information for only as long as we have a reason to keep it.
@@ -15,7 +15,7 @@ It’s probably no surprise that we collect information that you provide to us. 
 
 *   **Basic Account Information:** We ask for basic information from you in order to set up your account. This will may include your name, email, and anything else necessary for setting up your account.
 *   **Transaction and Billing Information:** If you sign up for a paid plan, we require credit card information. We do not store this information ourselves and instead use stripe for all transaction processing.
-*   **Poll Information:** In order to display and update your polls. All polls and voting on polls are sent to poll-app and stored as long as they are needed. 
+*   **Poll Information:** In order to display and update your polls. All polls and voting on polls are sent to workvote and stored as long as they are needed. 
 *   **Communications with Us:** When you communicate with us via form, email, or otherwise, we store a copy of our communications.
 
 #### _Information We Collect Automatically_
@@ -39,7 +39,7 @@ We use information about you as mentioned above and for the purposes listed belo
 *   To provide our Services–for example, to set up and maintain your account, host your website, backup and restore your website, charge you for any of our paid Services, or provide essays and stories for your reading pleasure through Longreads;
 *   To further develop and improve our Services–for example by adding new features that we think our users will enjoy or will help them to create and manage their websites more efficiently;
 *   To monitor and analyze trends and better understand how users interact with our Services, which helps us improve our Services and make them easier to use;
-*   To monitor and prevent any problems with our Services, protect the security of our Services, detect and prevent fraudulent transactions and other illegal activities, fight spam, and protect the rights and property of poll-app and others, which may result in us declining a transaction or the use of our Services;
+*   To monitor and prevent any problems with our Services, protect the security of our Services, detect and prevent fraudulent transactions and other illegal activities, fight spam, and protect the rights and property of workvote and others, which may result in us declining a transaction or the use of our Services;
 
 ### Sharing Information
 
@@ -51,7 +51,7 @@ We do not sell our users’ private personal information. We share information a
 
 ### Privacy Policy Changes
 
-Although most changes are likely to be minor, poll-app may change its Privacy Policy from time to time. poll-app encourages visitors to frequently check this page for any changes to its Privacy Policy. Your further use of the Services after a change to our Privacy Policy will be subject to the updated policy. 
+Although most changes are likely to be minor, workvote may change its Privacy Policy from time to time. workvote encourages visitors to frequently check this page for any changes to its Privacy Policy. Your further use of the Services after a change to our Privacy Policy will be subject to the updated policy. 
 
 ### About This Policy
 

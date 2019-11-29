@@ -90,7 +90,7 @@ const commandMessage = async ({ command, args, req }) => {
 // Need to actually provide actions to remedy these issues.
 const overLimitMessage = "You have made too many polls this month. Please upgrade your plan to make more polls."
 const expiredMessage = "Your account has expired. Please go to settings to reactivate your account."
-const noPlanMessage = "Be sure to choose a plan by clicking on the poll-app settings below."
+const noPlanMessage = "Be sure to choose a plan by clicking on the workvote settings below."
 const unexpectedError = "An unexpected error has occured";
 
 module.exports = async (req, res) => {
