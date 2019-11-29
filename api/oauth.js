@@ -58,8 +58,6 @@ module.exports = async (req, res) => {
 
     const oauthUrl = `${rootUrl}?${querystring.stringify(requestParams)}`
 
-    console.log(oauthUrl);
-
     const { data: json } = await axios.get(oauthUrl)
 
     if (!json.ok) {
@@ -68,7 +66,6 @@ module.exports = async (req, res) => {
       return ;
     }
 
-    console.log(json);
 
     const team_id = json.team_id || json.team.id;
     const user_id = json.user_id || json.user.id;
