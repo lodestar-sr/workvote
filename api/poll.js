@@ -45,7 +45,7 @@ const createPoll = (poll) => {
 const standardHelp = [
   {
     color: "#53a6fb",
-    text: "To use poll app, try one of the commands below."
+    text: "To use workvote, try one of the commands below."
   },
   {
     color: "#53a6fb",
@@ -80,7 +80,7 @@ const commandMessage = async ({ command, args, req }) => {
     attachments: [...standardHelp, {
         color: "#53a6fb",
         title: "Still having trouble?",
-        text: "Try using quotes like the examples above do. Quotes help Poll App know what part is a question and which parts are the choices."
+        text: "Try using quotes like the examples above do. Quotes help WorkVote know what part is a question and which parts are the choices."
       }
     ]
   })

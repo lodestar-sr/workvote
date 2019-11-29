@@ -278,7 +278,7 @@ const Pricing = ({selected, setSelected, subscribed, loggedIn}) => {
 };
 
 const LoggedInActions = ({team}) =>
-  <Flex style={{backgroundColor: "rgb(83, 166, 251)", marginBottom: 20}} direction="row" justify="flex-end">
+  <Flex style={{backgroundColor: "#0099FF"}} direction="row" justify="flex-end">
     <Flex style={{paddingRight: 30, minWidth: 200}} direction="row" alignSelf="flex-end" justify="space-around" align="center">
       <Flex style={{paddingRight: 20}} align="center">
         <img src={team.image_34} style={{height: 34, paddingRight: 5}}/>
@@ -326,7 +326,7 @@ const PlanDescription = ({price, planName, children}) =>
       }}>
         <img style={{width: 50, height: 50}} src="/static/logo.png"/>
       </div>
-      <Text style={{fontWeight: "bold"}}>Poll App</Text>
+      <Text style={{fontWeight: "bold"}}>WorkVote</Text>
       <Text secondary style={{margin: 0}}>{planName} - ${price}/month</Text>
       {children}
     </Flex>
@@ -657,10 +657,10 @@ const CongratsModal = ({team, onClose}) => {
   return (
     <div style={{display: "flex", flexDirection: "column"}}>
       <div style={{backgroundColor: "rgb(83, 166, 251)", color: "white", padding: 20, borderRadius: "5px 5px 0 0"}}>
-        <h2 style={{margin: 0, fontSize: 36}}>Poll App Installed Successfully!</h2>
+        <h2 style={{margin: 0, fontSize: 36}}>WorkVote Installed Successfully!</h2>
       </div>
       <div style={{padding: 20}}>
-        <p>Thanks for trying out poll app. You can now make polls in {team && `the ${team.name} `} Slack. To get started try posting this poll below.</p>
+        <p>Thanks for trying out workvote. You can now make polls in {team && `the ${team.name} `} Slack. To get started try posting this poll below.</p>
         <pre style={{backgroundColor: "#f6f8fa", padding: 10}}>
           <code>
             /poll "Should we start using polls?" "Yes" "No"
@@ -679,7 +679,7 @@ const CongratsModal = ({team, onClose}) => {
 const useCongratsModel = ({user}) => {
 
   const changeLocation = useCallback(() => {
-    history.replaceState({}, "Poll App", "/")
+    history.replaceState({}, "WorkVote", "/")
   })
 
 
@@ -720,7 +720,7 @@ const useInfoModal = ({user}) => {
     >
       <div style={{height: "100%", overflowY: "scroll"}}>
         <h3>How To Use:</h3>
-        <p>Once you have poll app installed you can see make a poll using the <code>/poll</code> command.</p>
+        <p>Once you have workvote installed you can see make a poll using the <code>/poll</code> command.</p>
         <blockquote>
           /poll "Favorite food?" "Pizza" "Ice Cream" "Other"
         </blockquote>
@@ -764,9 +764,7 @@ const App = ({user, initialSelection}) => {
         <Flex direction="row" justify="center">
           <Flex direction="column" justify="center">
             <Flex className="next-to" direction="row" align="baseline" justify="center">
-              {/* <img style={{width: 75, height: 75 }} src="/static/logo.png" /> */}
               <Heading1 align="center" text="Create polls in Slack"/>
-
             </Flex>
             <Flex className="next-to" direction="row" align="center" justify="center">
               <Text color="rgba(255, 255, 255, 0.71)" className="detail" style={{width: 500, height: 44, marginTop: 0, marginBottom: '22px', fontSize: '18px', fontWeight: 'bold'}}>
@@ -780,24 +778,29 @@ const App = ({user, initialSelection}) => {
             </Flex>
             <div className="screenshot"></div>
 
-            <SecondaryPanel
-              onSuccess={showCongratsModal}
-              setHasCard={setHasCard}
-              hasCard={hasCard}
-              setSubscribed={setSubscribed}
-              subscription={user.subscription}
-              selected={selected}
-              subscribed={subscribed}/>
+            <div className="secondary-panel">
+              <SecondaryPanel
+                onSuccess={showCongratsModal}
+                setHasCard={setHasCard}
+                hasCard={hasCard}
+                setSubscribed={setSubscribed}
+                subscription={user.subscription}
+                selected={selected}
+                subscribed={subscribed}/>
+            </div>
 
-            <h3 className="how-title">How it works</h3>
-            <div className="how-it-works">
-              <img className="slack-screen" src="/static/img2.png"/>
-              <div className="how-text">
-                <p>Once you have poll app installed you can view or make a poll using the/poll command</p>
-                <div className="line"></div>
-                <p>To make an anonymous poll just add anonymous to the end your poll. Names will not show up when people vote.</p>
+            {!user.loggedIn && <div>
+              <h3 className="how-title">How it works</h3>
+              <div className="how-it-works">
+                <img className="slack-screen" src="/static/img2.png"/>
+                <div className="how-text">
+                  <p>Once you have workvote installed you can view or make a poll using the/poll command</p>
+                  <div className="line"></div>
+                  <p>To make an anonymous poll just add anonymous to the end your poll. Names will not show up when people vote.</p>
+                </div>
               </div>
             </div>
+            }
           </Flex>
         </Flex>
       </div>
