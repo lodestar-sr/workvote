@@ -316,10 +316,10 @@ const buildPoll = ({question, options, body, anonymous}) => {
 }
 
 const monthlyCounts = {
-  "workvote-personal": 25,
-  "workvote-basic": 50,
-  "workvote-premium": 100,
-  "workvote-enterprise": 10000,
+  "plan_GGmYddwM7EEjWZ": 25,
+  "plan_GGmZYYHK0DyAPm": 50,
+  "plan_GGmZKAIUMfOt8n": 100,
+  "plan_GGmZWkEnZ0DRWt": 10000,
 }
 
 const setPlan = ({ teamRef, plan }) =>
@@ -331,7 +331,7 @@ const fetchStripeSubscription = async ({ stripe, stripe_id }) => {
 }
 
 const addTrialInfo = async ({stripe, subscription, fromPlan, toPlan}) => {
-  if (fromPlan === "workvote-personal" && toPlan === "workvote-basic" && !subscription.metadata.has_had_trial) {
+  if (fromPlan === "plan_GGmYddwM7EEjWZ" && toPlan === "plan_GGmZYYHK0DyAPm" && !subscription.metadata.has_had_trial) {
     await stripe.subscriptions.update(subscription.id, {
       trial_end: addDaysEpoch(new Date(), 30),
       metadata: {

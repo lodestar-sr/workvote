@@ -233,17 +233,17 @@ const Pricing = ({selected, setSelected, subscribed, loggedIn}) => {
       <SelectablePriceCard
         selected={selected}
         subscribed={subscribed}
-        name="workvote-personal"
+        name="plan_GGmYddwM7EEjWZ"
         price={0}
         features={["Non-Commercial Use", "25 polls a month"]}
         accentColor="#59A5FF"
         buttonText="Sign Up"
         title="Personal"
-        onClick={select("workvote-personal")}/>
+        onClick={select("plan_GGmYddwM7EEjWZ")}/>
       <SelectablePriceCard
         selected={selected}
         subscribed={subscribed}
-        name="workvote-basic"
+        name="plan_GGmZYYHK0DyAPm"
         price={15}
         features={["50 polls a month", "Unlimited Users", "30 day free trial"]}
         buttonFilled={true}
@@ -251,28 +251,28 @@ const Pricing = ({selected, setSelected, subscribed, loggedIn}) => {
         subtitle="Most Popular"
         buttonText="Try Now"
         title="Basic"
-        onClick={select("workvote-basic")}/>
+        onClick={select("plan_GGmZYYHK0DyAPm")}/>
       <SelectablePriceCard
         selected={selected}
         subscribed={subscribed}
-        name="workvote-premium"
+        name="plan_GGmZKAIUMfOt8n"
         price={25}
         features={["100 polls a month", "Unlimited Users"]}
         accentColor="#006CEA"
         buttonVariant="contained"
         buttonText="Sign Up"
         title="Premium"
-        onClick={select("workvote-premium")}/>
+        onClick={select("plan_GGmZKAIUMfOt8n")}/>
       <SelectablePriceCard
         selected={selected}
         subscribed={subscribed}
-        name="workvote-enterprise"
+        name="plan_GGmZWkEnZ0DRWt"
         price={50}
         features={["Unlimited polls a month", "Unlimited Users"]}
         accentColor="#004AA0"
         buttonText="Sign Up"
         title="Enterprise"
-        onClick={select("workvote-enterprise")}/>
+        onClick={select("plan_GGmZWkEnZ0DRWt")}/>
     </div>
   )
 };
@@ -520,17 +520,17 @@ const useDevTools = () => {
 }
 
 const priceBySelected = {
-  "workvote-personal": 0,
-  "workvote-basic": 15,
-  "workvote-premium": 25,
-  "workvote-enterprise": 50,
+  "plan_GGmYddwM7EEjWZ": 0,
+  "plan_GGmZYYHK0DyAPm": 15,
+  "plan_GGmZKAIUMfOt8n": 25,
+  "plan_GGmZWkEnZ0DRWt": 50,
 }
 
 const nameByPlan = {
-  "workvote-personal": "Personal",
-  "workvote-basic": "Basic",
-  "workvote-premium": "Premium",
-  "workvote-enterprise": "Enterprise",
+  "plan_GGmYddwM7EEjWZ": "Personal",
+  "plan_GGmZYYHK0DyAPm": "Basic",
+  "plan_GGmZKAIUMfOt8n": "Premium",
+  "plan_GGmZWkEnZ0DRWt": "Enterprise",
 }
 
 const SubscriptionButton = ({subscribed, selected, setSubscribed}) => {
@@ -622,7 +622,7 @@ const SecondaryPanel = ({ selected, subscribed, subscription, setSubscribed, has
 
   if (!subscribed && !selected) {
     return '';
-  } else if (hasCard || selected === "workvote-personal" || (subscribed === "workvote-personal" && !selected)) {
+  } else if (hasCard || selected === "plan_GGmYddwM7EEjWZ" || (subscribed === "plan_GGmYddwM7EEjWZ" && !selected)) {
     return (
       <ActiveSubscription
         hasCard={hasCard}
@@ -742,7 +742,7 @@ const App = ({user, initialSelection}) => {
   const [showInfoModal, _hideInfoModal] = useInfoModal({user});
 
   useEffect(() => {
-    if (initialSelection === "workvote-personal") {
+    if (initialSelection === "plan_GGmYddwM7EEjWZ") {
       showCongratsModal();
     }
   }, [])
