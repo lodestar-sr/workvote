@@ -68,7 +68,7 @@ module.exports = async (req, res) => {
     }
 
     const voteData = getVoteData(body);
-    console.log(voteData);
+    console.log('-------------------------', voteData, '--------------------------');
     const updatedPoll = await vote(voteData);
     send(res, 200, buildResponse(updatedPoll));
 
