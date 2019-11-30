@@ -33,8 +33,24 @@ const extractData = (poll) => ({
   anonymous: poll.data.anonymous,
 })
 
-const vote = ({ callback_id, voter, index }) => {
-  return client.query(q.Call(q.Function("vote"), [callback_id, index, voter]))
+const vote = async ({ callback_id, voter, index }) => {
+  const ref = await client.query(q.Select("ref", q.Get(q.Match(q.Index('test-get-polls-by-callback-id'), callback_id))));
+  const {data: poll} = await client.query(q.Get(q.Match(q.Index('test-get-polls-by-callback-id'), callback_id)));
+  for (let i=0; i<poll.options.length; i++) {
+    if (poll.options[i].index == index) {
+      const id = poll.options[i].votes.indexOf(voter);
+      if (id === -1) {
+        poll.options[i].votes.push(voter);
+      }
+    } else {
+      const id = poll.options[i].votes.indexOf(voter);
+      if (id !== -1) {
+        poll.options[i].votes.slice(id, 1);
+      }
+    }
+  }
+  return await client.query(q.Replace(ref, {data: poll}));
+  // return client.query(q.Call(q.Function("vote"), [callback_id, index, voter]))
 }
 
 const buildResponse = (poll) => {
@@ -67,9 +83,7 @@ module.exports = async (req, res) => {
       return;
     }
 
-    const voteData = getVoteData(body);
-    console.log('-------------------------', voteData, '--------------------------');
-    const updatedPoll = await vote(voteData);
+    const updatedPoll = await vote(getVoteData(body));
     send(res, 200, buildResponse(updatedPoll));
 
   } catch (e) {
