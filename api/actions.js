@@ -1,12 +1,12 @@
 require('dotenv').config();
-const { send } = require('micro');
+const {send} = require('micro');
 const parseUrlEncode = require('urlencoded-body-parser');
-const { buildPollMessage, verifySlackRequest } = require('./util');
+const {buildPollMessage, verifySlackRequest} = require('./util');
 
 const faunadb = require("faunadb");
 const q = faunadb.query;
 
-const client = new faunadb.Client({ secret: process.env.FAUNA_SECRET });
+const client = new faunadb.Client({secret: process.env.FAUNA_SECRET});
 const slackSigningSecret = process.env.SLACK_SIGNING_SECRET
 
 
@@ -33,10 +33,10 @@ const extractData = (poll) => ({
   anonymous: poll.data.anonymous,
 })
 
-const vote = async ({ callback_id, voter, index }) => {
+const vote = async ({callback_id, voter, index}) => {
   const ref = await client.query(q.Select("ref", q.Get(q.Match(q.Index('test-get-polls-by-callback-id'), callback_id))));
   const {data: poll} = await client.query(q.Get(q.Match(q.Index('test-get-polls-by-callback-id'), callback_id)));
-  for (let i=0; i<poll.options.length; i++) {
+  for (let i = 0; i < poll.options.length; i++) {
     if (poll.options[i].index == index) {
       const id = poll.options[i].votes.indexOf(voter);
       if (id === -1) {
@@ -51,7 +51,7 @@ const vote = async ({ callback_id, voter, index }) => {
   }
   return await client.query(q.Replace(ref, {data: poll}));
   // return client.query(q.Call(q.Function("vote"), [callback_id, index, voter]))
-}
+};
 
 const buildResponse = (poll) => {
   return {
@@ -73,7 +73,7 @@ module.exports = async (req, res) => {
 
     console.log(body)
 
-    const slackVerification = await verifySlackRequest({ slackSigningSecret, req })
+    const slackVerification = await verifySlackRequest({slackSigningSecret, req})
     if (!slackVerification.success) {
       return ephemeralMessage("Could not verify this message originated from slack. Please try again.")
     }

@@ -1,5 +1,5 @@
 require('dotenv').config();
-const { send } = require('micro');
+const {send} = require('micro');
 const parseUrlEncode = require('urlencoded-body-parser');
 
 const {
@@ -21,7 +21,7 @@ const q = faunadb.query;
 
 const slackSigningSecret = process.env.SLACK_SIGNING_SECRET
 
-const client = new faunadb.Client({ secret: process.env.FAUNA_SECRET });
+const client = new faunadb.Client({secret: process.env.FAUNA_SECRET});
 
 const createPoll = (poll) => {
   return (
@@ -57,19 +57,19 @@ const standardHelp = [
     text: "/poll “Where to eat?” “Home” “Out” anonymous"
   }]
 
-const commandMessage = async ({ command, args, req }) => {
+const commandMessage = async ({command, args, req}) => {
 
   if (command === "NO_OPTIONS") {
     return addFooterToMessage({
       response_type: "ephemeral",
       replace_original: false,
       attachments: [
-      {
+        {
           color: "#53a6fb",
           title: "Need Options and A Question",
           text: "It looks like you only sent a question, but no options for people to select. Try adding your options in quotes after your question like the examples below."
-      },
-       ...standardHelp,
+        },
+        ...standardHelp,
       ]
     })
   }
@@ -78,10 +78,10 @@ const commandMessage = async ({ command, args, req }) => {
     response_type: "ephemeral",
     replace_original: false,
     attachments: [...standardHelp, {
-        color: "#53a6fb",
-        title: "Still having trouble?",
-        text: "Try using quotes like the examples above do. Quotes help WorkVote know what part is a question and which parts are the choices."
-      }
+      color: "#53a6fb",
+      title: "Still having trouble?",
+      text: "Try using quotes like the examples above do. Quotes help WorkVote know what part is a question and which parts are the choices."
+    }
     ]
   })
 }
@@ -98,33 +98,33 @@ module.exports = async (req, res) => {
 
     const body = await parseUrlEncode(req);
 
-    const slackVerification = await verifySlackRequest({ slackSigningSecret, req })
+    const slackVerification = await verifySlackRequest({slackSigningSecret, req})
     if (!slackVerification.success) {
       return ephemeralMessage("Could not verify this message originated from slack. Please try again.")
     }
 
     console.log(body.text);
 
-    const { question, options, anonymous, args } = parseMessage(body.text);
+    const {question, options, anonymous, args} = parseMessage(body.text);
 
     if (question === "help" || question === "" || !question) {
-      send(res, 200, await commandMessage({ command: "help", args, req }))
+      send(res, 200, await commandMessage({command: "help", args, req}))
       return;
     }
 
     if (options.length === 0) {
-      send(res, 200, await commandMessage({ command: "NO_OPTIONS", args, req }))
+      send(res, 200, await commandMessage({command: "NO_OPTIONS", args, req}))
       return;
     }
 
 
-    const poll = buildPoll({ question, options, body, anonymous });
+    const poll = buildPoll({question, options, body, anonymous});
     const callback_id = poll.data.callback_id
 
     const action = await client.query(createPoll(poll));
 
     if (action === "created") {
-      send(res, 200, buildPollMessage({ question, options, anonymous, callback_id }));
+      send(res, 200, buildPollMessage({question, options, anonymous, callback_id}));
     } else if (action === "overLimit") {
       send(res, 200, ephemeralMessage(overLimitMessage))
     } else if (action === "expired") {

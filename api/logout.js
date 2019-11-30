@@ -1,4 +1,4 @@
-const { send } = require('micro');
+const {send} = require('micro');
 const redirect = require('micro-redirect');
 
 

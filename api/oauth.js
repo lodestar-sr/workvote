@@ -4,17 +4,16 @@ const url = require('url');
 const uuid = require('uuid/v4');
 const querystring = require('querystring');
 const redirect = require('micro-redirect');
-const { send } = require('micro');
+const {send} = require('micro');
 const cookie = require('cookie');
-const { createTeamIfNotExists, upsertUserAccessToken, subscribe } = require('./util');
+const {createTeamIfNotExists, upsertUserAccessToken, subscribe} = require('./util');
 const stripe = require("stripe")(process.env.STRIPE_SECRET);
-
 
 
 const faunadb = require("faunadb");
 const q = faunadb.query;
 
-const client = new faunadb.Client({ secret: process.env.FAUNA_SECRET });
+const client = new faunadb.Client({secret: process.env.FAUNA_SECRET});
 
 const rootUrl = "https://slack.com/api/oauth.access"
 
@@ -23,10 +22,10 @@ const clientInfo = {
   client_secret: process.env.CLIENT_SECRET
 }
 
-const upsertUserAndTeamInfo = async ({ team_id, user_id, slack_access_token, access_token }) => {
+const upsertUserAndTeamInfo = async ({team_id, user_id, slack_access_token, access_token}) => {
   console.log("upserting");
   const teamInfo = await client.query(
-    upsertUserAccessToken({ team_id, user_id, slack_access_token, access_token })
+    upsertUserAccessToken({team_id, user_id, slack_access_token, access_token})
   );
 
   if (teamInfo.data.stripe_id) {
@@ -34,9 +33,9 @@ const upsertUserAndTeamInfo = async ({ team_id, user_id, slack_access_token, acc
     return teamInfo
   }
 
-  const { id: stripe_id } = await stripe.customers.create()
+  const {id: stripe_id} = await stripe.customers.create()
   console.log("Updating with stripe info");
-  const response = await client.query(q.Update(teamInfo.ref, { data: { stripe_id }}))
+  const response = await client.query(q.Update(teamInfo.ref, {data: {stripe_id}}))
 
   return response
 
@@ -46,7 +45,7 @@ const upsertUserAndTeamInfo = async ({ team_id, user_id, slack_access_token, acc
 module.exports = async (req, res) => {
 
   try {
-    const { code, selected } = querystring.parse(url.parse(req.url).query);
+    const {code, selected} = querystring.parse(url.parse(req.url).query);
     const requestParams = {
       ...clientInfo,
       code,
@@ -58,12 +57,12 @@ module.exports = async (req, res) => {
 
     const oauthUrl = `${rootUrl}?${querystring.stringify(requestParams)}`
 
-    const { data: json } = await axios.get(oauthUrl)
+    const {data: json} = await axios.get(oauthUrl)
 
     if (!json.ok) {
       console.error(json)
       send(res, 400, "Error encountered.")
-      return ;
+      return;
     }
 
 
@@ -73,7 +72,7 @@ module.exports = async (req, res) => {
     const access_token = uuid();
 
     console.log(team_id, user_id)
-    const teamInfo = await upsertUserAndTeamInfo({ team_id, user_id, slack_access_token, access_token })
+    const teamInfo = await upsertUserAndTeamInfo({team_id, user_id, slack_access_token, access_token})
 
     if (selected === "plan_GGmYddwM7EEjWZ") {
       console.log("Personal, so subscribing now")
@@ -90,18 +89,17 @@ module.exports = async (req, res) => {
     }
 
 
-   
     res.setHeader('Set-Cookie', cookie.serialize('access_token', access_token, {
       httpOnly: true
     }));
-    
+
     if (selected) {
       redirect(res, 302, `/?selected=${selected}`);
     } else {
       redirect(res, 302, "/");
     }
   }
-  catch(e) {
+  catch (e) {
     console.error(e)
     send(res, 500, {message: e.message});
   }

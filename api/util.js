@@ -38,7 +38,7 @@ const anonymousAndOptions = (options) => {
   }
 }
 
-const parseMessage = (text="") => {
+const parseMessage = (text = "") => {
 
   // This code is super ugly.
   const cleanedText = removeSmartQuotes(text)
@@ -46,7 +46,7 @@ const parseMessage = (text="") => {
     /(".+?")|(.+?\?)|(.+? )|(.+$)/)
     .map(cleanString);
 
-  const { anonymous, options } = anonymousAndOptions(initialOptions)
+  const {anonymous, options} = anonymousAndOptions(initialOptions)
 
   return {
     question,
@@ -126,12 +126,12 @@ const ephemeralMessage = (text) => addFooterToMessage({
   attachments: [{
     color: "#53a6fb",
     text,
-   }],
+  }],
   response_type: "ephemeral",
   replace_original: false
 })
 
-const buildPollMessage = ({ question, options, callback_id, anonymous }) => {
+const buildPollMessage = ({question, options, callback_id, anonymous}) => {
   const actions = buildActions(options)
   return addFooterToMessage({
     response_type: "in_channel",
@@ -175,7 +175,7 @@ const createIfNotExists = (className, ref, value) =>
     q.Select("ref", q.Create(q.Class(className), value)),
     q.Select("ref", q.Get(ref)))
 
- const upsert = (className, ref, value) =>
+const upsert = (className, ref, value) =>
   q.If(q.Not(q.Exists(ref)),
     q.Select("ref", q.Create(q.Class(className), value)),
     q.Do(
@@ -193,7 +193,7 @@ const addDaysEpoch = (date, days) => {
   // the fact that dates are mutable is terrible
   const newDate = new Date(date);
   newDate.setDate(newDate.getDate() + days);
-  return Math.floor(newDate.valueOf()/1000);
+  return Math.floor(newDate.valueOf() / 1000);
 }
 
 const addDays = (date, days) => {
@@ -258,8 +258,8 @@ const incrementMonth = (poll) => {
   const teamRef = q.Select("ref", q.Get(poll.data.team));
   return (
     q.Let({
-      currentCount: currentCount(poll)
-    },
+        currentCount: currentCount(poll)
+      },
       q.Update(teamRef, {
         data: {
           monthlyCounts: {
@@ -278,26 +278,26 @@ const getRefByIndex = (index, value) =>
 
 const createTeamIfNotExists = (team_id) => {
   const teamRef = matchIndex("test-teams-by-team-id", team_id);
-  return createIfNotExists("teams", teamRef, { data: { team_id }})
+  return createIfNotExists("teams", teamRef, {data: {team_id}})
 }
 
 
-const userInfoByAccessToken = ({ access_token }) => {
+const userInfoByAccessToken = ({access_token}) => {
   return q.Get(matchIndex("test-get-user-by-access-token", access_token))
 }
 
-const teamInfoByAccessToken = ({ access_token }) => {
-   return q.Get(q.Select(["data", "team"], userInfoByAccessToken({ access_token })))
+const teamInfoByAccessToken = ({access_token}) => {
+  return q.Get(q.Select(["data", "team"], userInfoByAccessToken({access_token})))
 }
 
-const upsertUserAccessToken = ({ team_id, user_id, slack_access_token, access_token }) => {
+const upsertUserAccessToken = ({team_id, user_id, slack_access_token, access_token}) => {
   const team = refByIndex("test-teams-by-team-id", team_id);
   const userRef = refByIndex("test-users-by-user-id", user_id);
   return (
-    q.Let({team_ref: createIfNotExists("teams", team, { data: { team_id }})},
-       q.Do(
-          upsert("users", userRef, { data: { user_id, slack_access_token, access_token, team: q.Var("team_ref")}}),
-          q.Get(q.Var("team_ref"))
+    q.Let({team_ref: createIfNotExists("teams", team, {data: {team_id}})},
+      q.Do(
+        upsert("users", userRef, {data: {user_id, slack_access_token, access_token, team: q.Var("team_ref")}}),
+        q.Get(q.Var("team_ref"))
       )
     )
   )
@@ -322,10 +322,10 @@ const monthlyCounts = {
   "plan_GGmZWkEnZ0DRWt": 10000,
 }
 
-const setPlan = ({ teamRef, plan }) =>
+const setPlan = ({teamRef, plan}) =>
   q.Update(teamRef, {data: {maxCount: monthlyCounts[plan], expirationDate: null}})
 
-const fetchStripeSubscription = async ({ stripe, stripe_id }) => {
+const fetchStripeSubscription = async ({stripe, stripe_id}) => {
   console.log(customer)
   return customer.subscriptions.data[0]
 }
@@ -341,7 +341,7 @@ const addTrialInfo = async ({stripe, subscription, fromPlan, toPlan}) => {
   }
 }
 
-const subscribe = async ({ customer, client, plan, stripe, teamRef, stripe_id }) => {
+const subscribe = async ({customer, client, plan, stripe, teamRef, stripe_id}) => {
   const subscription = customer.subscriptions.data[0]
   const fromPlan = subscription && subscription.items.data[0].plan.id;
   if (subscription && fromPlan && fromPlan !== plan) {
@@ -350,7 +350,7 @@ const subscribe = async ({ customer, client, plan, stripe, teamRef, stripe_id })
       plan,
 
     })
-    await client.query(setPlan({ teamRef, plan }))
+    await client.query(setPlan({teamRef, plan}))
     return subscription;
   }
 
@@ -360,11 +360,11 @@ const subscribe = async ({ customer, client, plan, stripe, teamRef, stripe_id })
     trial_from_plan: true
   })
 
-  await client.query(setPlan({ teamRef, plan }))
+  await client.query(setPlan({teamRef, plan}))
   return newSubscription;
 }
 
-const verifySlackMessage = ({ slackSigningSecret, requestSignature, timestamp, body }) => {
+const verifySlackMessage = ({slackSigningSecret, requestSignature, timestamp, body}) => {
   const currentTime = Math.floor(Date.now() / 1000)
   const fiveMinutes = 60 * 5
   if (Math.abs(currentTime - timestamp) > fiveMinutes) {
@@ -377,7 +377,7 @@ const verifySlackMessage = ({ slackSigningSecret, requestSignature, timestamp, b
   const [version, hash] = requestSignature.split("=");
   const hmac = crypto.createHmac("sha256", slackSigningSecret);
   hmac.update(`${version}:${timestamp}:${body}`);
-  const digest =  hmac.digest('hex');
+  const digest = hmac.digest('hex');
   if (!timingSafeCompare(hash, digest)) {
     return {
       success: false,
@@ -392,11 +392,11 @@ const verifySlackMessage = ({ slackSigningSecret, requestSignature, timestamp, b
   }
 }
 
-const verifySlackRequest = async ({ slackSigningSecret, req}) => {
+const verifySlackRequest = async ({slackSigningSecret, req}) => {
   const body = await req.rawBody;
   const timestamp = req.headers["x-slack-request-timestamp"];
   const requestSignature = req.headers["x-slack-signature"];
-  return verifySlackMessage({ body, timestamp, requestSignature, slackSigningSecret })
+  return verifySlackMessage({body, timestamp, requestSignature, slackSigningSecret})
 }
 
 module.exports = {
