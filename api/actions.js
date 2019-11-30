@@ -45,7 +45,7 @@ const vote = async ({ callback_id, voter, index }) => {
     } else {
       const id = poll.options[i].votes.indexOf(voter);
       if (id !== -1) {
-        poll.options[i].votes.slice(id, 1);
+        poll.options[i].votes.splice(id, 1);
       }
     }
   }
