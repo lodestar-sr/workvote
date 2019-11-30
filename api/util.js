@@ -87,14 +87,14 @@ const buildFields = (options, anonymous) => {
 }
 
 const deleteButton = ({
-  text: "Delete Poll",
+  text: "Delete WorkVote",
   type: "button",
   style: "danger",
   value: "delete-poll",
   name: "delete-poll",
   confirm: {
-    title: "Delete Poll?",
-    text: "Are you sure you want to delete this poll? This cannot be undone.",
+    title: "Delete WorkVote?",
+    text: "Are you sure you want to delete this workvote? This cannot be undone.",
     ok_text: "Delete",
     dismiss_text: "No",
   },

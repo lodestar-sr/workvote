@@ -67,7 +67,9 @@ module.exports = async (req, res) => {
       return;
     }
 
-    const updatedPoll = await vote(getVoteData(body))
+    const voteData = getVoteData(body);
+    console.log(voteData);
+    const updatedPoll = await vote(voteData);
     send(res, 200, buildResponse(updatedPoll));
 
   } catch (e) {
