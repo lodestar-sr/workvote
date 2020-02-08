@@ -1,4 +1,4 @@
-# WorkVote
+# WorkVote - Slack Bot
 A [workvote app](https://work.vote) for slack
 
 
